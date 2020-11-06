@@ -1,0 +1,59 @@
+security:
+
+    encoders:
+        # Les admins
+        Symfony\Component\Security\Core\User\User: plaintext
+        # Les auteurs
+        App\Entity\Auteur: plaintext
+
+    role_hierarchy:
+        # On défini une hierarchie de permissions
+        # ~ représente ici l'absence de permissions -> anonyme
+        ROLE_AUTEUR: ~
+        # Les admins peuvent faire tout ce que les auteurs font
+        ROLE_ADMIN: ROLE_AUTEUR
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # Lorsque plsrs providers alors specifier l'ordre des providers pour la verification des données d'authent
+
+        chain_provider:
+            chain:
+                providers: [les_admins, les_auteurs]
+
+        # Les admins sont stockés dans ce fichier grace au provider 'memory'
+        les_admins:
+            memory:
+                users:
+                    # login = admin, password = secret. Le rôle de cet utilisateur est ROLE_ADMIN
+                    admin: {password: secret, roles: ['ROLE_ADMIN']}
+        # Les auteurs sont stockés en base et représentés par l'entité 'Auteur'
+        les_auteurs:
+            entity:
+                class: App\Entity\Auteur
+                property: identifiant
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: lazy
+
+            # on utilise une authent par formulaire
+            form_login: ~
+
+            provider: chain_provider
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/article/(creer|modifier|supprimer), roles: ROLE_AUTEUR }
+        - { path: ^/auteur/(creer|modifier), roles: ROLE_ADMIN }

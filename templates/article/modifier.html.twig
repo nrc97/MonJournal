@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification d'un article - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+<div class="main-container">
+    <h2>Modification d'un article</h2>
+
+    {# On applique le theme avant le rendu du formulaire #}
+    {% form_theme modifierForm 'themes/form.html.twig' %}
+
+    {# Instanciation du formulaire de modification #}
+    {{ form(modifierForm) }}
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ auteur.identifiant }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+    <div class="main-container">
+        <h2>{{ auteur.identifiant }}</h2>
+        <p>Nom: {{ auteur.nom }}</p>
+        <p>Prenom: {{ auteur.prenom }}</p>
+        <h2>Articles de cet auteur</h2>
+        <ul>
+            {% for article in auteur.articles %}
+                <li>
+                    <a href="{{ path('article_lire', {'id': article.id}) }}">{{ article.titre }}</a>
+                </li>
+            {% else %}
+                Cet auteur n'a pas d'article publié !
+            {% endfor %}
+
+        </ul>
+
+        <hr/>
+        <p>
+            <a href="{{ path('auteur_tous') }}">Retour à l'accueil des auteurs</a>
+            <br/>
+            <a href="{{ path('auteur_modifier', {'identifiant': auteur.identifiant}) }}">Modifier l'auteur</a>
+        </p>
+    </div>
+{% endblock %}

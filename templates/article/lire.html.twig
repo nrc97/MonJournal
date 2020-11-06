@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ article.titre }} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    <div class="main-container">
+        <h2>{{ article.titre | title }}</h2>
+        <p>
+            <b>Ecrit pas {{ article.auteur.prenom }} {{ article.auteur.nom }}, {{ article.datePublication | date('d/m/Y') }}</b>
+        </p>
+        <p>
+            <i>{{ article.intro | capitalize }}</i>
+        </p>
+        <p>
+            {{ article.texte }}
+        </p>
+        <hr/>
+        <p>
+            <a href="{{ path('accueil') }}">Retour à l'accueil.</a>
+            <br/>
+            <a href="{{ path('article_modifier', {'id': article.id}) }}">Modifier l'article.</a>
+            <br/>
+            <a href="{{ path('article_supprimer', {'id': article.id}) }}">Supprimer l'article.</a>
+        </p>
+    </div>
+{% endblock %}

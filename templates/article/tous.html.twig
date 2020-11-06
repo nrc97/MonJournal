@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    <nav>
+        <div>
+            <a href="{{ path('auteur_tous') }}">Les auteurs...</a>
+        </div>
+        <div>
+            <a href="{{ path('article_creer') }}">Ajouter un article.</a>
+        </div>
+    </nav>
+
+    <div>
+        {% for message in app.flashes('suppression') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="main-container">
+
+        <h2>Les articles du jour !</h2>
+        {% for article in articlesDuJour %}
+            {{ article.titre }}
+            <p>
+                <b>
+                    Ecrit par {{ article.auteur.prenom }} {{ article.auteur.nom }}, le {{ article.datePublication | date('d/m/Y') }}
+                </b>
+            </p>
+            <p>
+                <i>{{ article.intro }}</i>
+            </p>
+            <p>
+                <a href="{{ path('article_lire', {'id': article.id}) }}">Lire la suite...</a>
+            </p>
+            <br />
+        {% else %}
+            <h3>Pas d'articles aujourd'hui !</h3>
+        {% endfor %}
+
+        <h2>Tous les articles</h2>
+        {% for article in tousLesArticles %}
+            {{ article.titre }}
+            <p>
+                <b>
+                    Ecrit par {{ article.auteur.prenom }} {{ article.auteur.nom }}, le {{ article.datePublication | date('d/m/Y') }}
+                </b>
+            </p>
+            <p>
+                <i>{{ article.intro }}</i>
+            </p>
+            <p>
+                <a href="{{ path('article_lire', {'id': article.id}) }}">Lire la suite...</a>
+            </p>
+            <br />
+        {% else %}
+        <h3>La liste des artciles est vide !</h3>
+        {% endfor %}
+
+    </div>
+{% endblock %}

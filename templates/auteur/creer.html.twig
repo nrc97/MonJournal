@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Auteur - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    <nav>
+        <div>
+            <a href="{{ path('auteur_tous') }}">Retour à la liste des auteurs</a>
+        </div>
+    </nav>
+
+<div class="main-container">
+    {# On applique le theme avant le rendu du formulaire #}
+    {% form_theme ajouterForm 'themes/form.html.twig' %}
+
+    {{ form(ajouterForm) }}
+</div>
+{% endblock %}

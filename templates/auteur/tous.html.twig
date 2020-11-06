@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+
+    <nav>
+        <div>
+            <a href="{{ path('accueil') }}">Retour à l'accueil !</a>
+        </div>
+        <div>
+            <a href="{{ path('auteur_creer') }}">Ajouter un auteur !</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+    <h2>Tous les auteurs</h2>
+        <ul>
+            {% for auteur in tousLesAuteurs %}
+                <li>
+                    <a href="{{ path('auteur_afficher', {'identifiant': auteur.identifiant}) }}">{{ auteur.identifiant }}</a>
+                </li>
+                {% else %}
+                    Il n'y a pas d'auteur enregistré
+                {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

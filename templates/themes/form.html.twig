@@ -1,0 +1,31 @@
+{# Theme du formulaire #}
+
+{#
+    On redefini la fonction form_row() en creant un block 'form_row'
+    On agit ainsi sur la génération de chaque champ
+#}
+
+{% block form_row %}
+    <div class="formRow">
+        <span class="formLabel">
+            {# On appelle form_label pour provoque le rendu du label #}
+            {{ form_label(form) }}
+        </span>
+        <span class="formWidget">
+            {# Rendu du widget #}
+            {{ form_widget(form) }}
+        </span>
+        <span class="formErrors">
+            {# Rendu des erreurs #}
+            {{ form_errors(form) }}
+        </span>
+    </div>
+{% endblock %}
+{# On redefini la presentation du bloc errors #}
+{% block form_errors %}
+    {% if errors | length > 0 %}
+        {% for err in errors %}
+            {{ loop.index }}. {{ err.message }}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

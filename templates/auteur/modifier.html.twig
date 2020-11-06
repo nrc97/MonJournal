@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un auteur - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    <nav>
+        <div>
+            <a href="{{ path('auteur_tous') }}">Retour à la liste des auteurs</a>
+        </div>
+    </nav>
+
+<div class="main-container">
+    {# On applique le theme avant le rendu du formulaire #}
+    {% form_theme modifierForm 'themes/form.html.twig' %}
+    {{ form(modifierForm) }}
+</div>
+{% endblock %}

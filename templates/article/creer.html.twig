@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Redaction d'un article - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    <div class="main-container">
+        <h2>Redaction d'un article</h2>
+
+        {# On applique le theme avant le rendu du formulaire #}
+        {% form_theme ajouterForm 'themes/form.html.twig' %}
+
+        {# Rendu du formulaire #}
+        {{ form(ajouterForm) }}
+    </div>
+{% endblock %}
